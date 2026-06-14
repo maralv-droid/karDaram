@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>کاردارم</title>
+<meta name="theme-color" content="#6c5ce7"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="کاردارم"/>
+<link rel="manifest" href="manifest.json"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Tahoma,sans-serif;background:#f4f3ff;color:#2d3436;min-height:100vh;padding-bottom:80px}
+.hdr{background:linear-gradient(135deg,#6c5ce7,#a29bfe);padding:24px 16px 16px;color:#fff}
+.hdr h1{font-size:22px;font-weight:700}
+.hdate{font-size:13px;opacity:.85;margin-top:4px}
+.ubanner{margin-top:10px;background:rgba(255,255,255,.2);border-radius:8px;padding:6px 12px;font-size:13px;display:none}
+nav{display:flex;background:#fff;border-bottom:1px solid #e0e0e0}
+nav button{flex:1;padding:12px 0;border:none;background:none;font-family:Tahoma,sans-serif;font-size:14px;cursor:pointer;color:#888;border-bottom:2px solid transparent}
+nav button.active{color:#6c5ce7;font-weight:700;border-bottom:2px solid #6c5ce7}
+.content{padding:16px}
+.ibox{background:#fff;border-radius:12px;padding:16px;margin-bottom:16px;border:1px solid #e0e0e0}
+.ibox label{font-size:13px;color:#888;display:block;margin-bottom:8px}
+textarea{width:100%;border:1px solid #e0e0e0;border-radius:8px;padding:8px 10px;font-size:14px;resize:none;font-family:Tahoma,sans-serif;background:#f9f9f9;color:#2d3436}
+.row2{display:flex;gap:8px;margin-top:6px}
+.row2 select,.row2 input{flex:1;border:1px solid #e0e0e0;border-radius:8px;padding:8px 10px;font-size:13px;font-family:Tahoma,sans-serif;background:#f9f9f9;color:#2d3436}
+.noteinp{width:100%;border:1px solid #e0e0e0;border-radius:8px;padding:8px 10px;font-size:13px;font-family:Tahoma,sans-serif;background:#f9f9f9;color:#2d3436;margin-top:6px}
+.btn{background:#6c5ce7;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;cursor:pointer;font-family:Tahoma,sans-serif;width:100%;margin-top:10px}
+.btnG{background:linear-gradient(135deg,#00b894,#00cec9);color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:Tahoma,sans-serif;width:100%;margin-bottom:16px}
+.cbox{background:#f0eeff;border-radius:10px;padding:14px;font-size:13px;line-height:1.8;margin-top:12px;border:1px solid #a29bfe;white-space:pre-wrap;word-break:break-word;display:none}
+.cbox button{margin-top:10px;background:#6c5ce7;color:#fff;border:none;border-radius:8px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:Tahoma,sans-serif}
+.empty{text-align:center;color:#aaa;margin-top:40px;font-size:14px}
+.frow{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px}
+.fbtn{white-space:nowrap;padding:6px 14px;border-radius:20px;border:1px solid #e0e0e0;background:#fff;font-size:13px;cursor:pointer;font-family:Tahoma,sans-serif;color:#2d3436}
+.fbtn.active{background:#6c5ce7;color:#fff;border-color:#6c5ce7}
+.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid #e0e0e0}
+.card.urg{border-color:#e17055}
+.top{display:flex;align-items:flex-start;gap:10px}
+.info{flex:1}
+.ttl{font-weight:600;font-size:14px}
+.tnotes{font-size:12px;color:#888;margin-top:3px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tcat{border-radius:6px;padding:2px 8px;font-size:11px;background:#a29bfe33;color:#6c5ce7}
+.tdate{border-radius:6px;padding:2px 8px;font-size:11px;background:#f4f3ff;color:#636e72}
+.tdate.urg{background:#e1705522;color:#e17055;border:1px solid #e17055}
+.ibtn{background:none;border:none;cursor:pointer;font-size:16px;padding:2px}
+.dcard{background:#fff;border-radius:10px;padding:12px;margin-bottom:8px;opacity:.55;border:1px solid #e0e0e0;display:flex;align-items:center;gap:10px}
+.dtitle{text-decoration:line-through;font-size:13px;flex:1}
+.dlbl{font-size:13px;color:#888;font-weight:600;margin-bottom:10px;margin-top:24px}
+input[type=checkbox]{accent-color:#6c5ce7;cursor:pointer;margin-top:3px;width:16px;height:16px}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <h1>کاردارم ✨</h1>
+  <div class="hdate" id="hdate"></div>
+  <div class="ubanner" id="ubanner"></div>
+</div>
+<nav>
+  <button class="active" id="navHome" onclick="showView('home')">🏠 خانه</button>
+  <button id="navTasks" onclick="showView('tasks')">🧠 مغز مرتب شده</button>
+</nav>
+<div class="content">
+  <div class="ibox">
+    <label>مغرتو خالی کن اینجا 👇</label>
+    <textarea id="ttitle" rows="2" placeholder="مثلاً: با آقای کلاوزن تماس بگیر"></textarea>
+    <div class="row2">
+      <select id="tcat">
+        <option>اداری</option><option>مالی</option><option>حقوقی</option>
+        <option>مراقبت شخصی</option><option>خلاقانه</option><option>اجتماعی</option>
+        <option>سلامت</option><option>دیگر</option>
+      </select>
+      <input type="date" id="tdate"/>
+    </div>
+    <input class="noteinp" type="text" id="tnotes" placeholder="یادداشت (اختیاری)"/>
+    <button class="btn" onclick="addTask()">➕ اضافه کن</button>
+  </div>
+
+  <div id="homeView">
+    <button class="btnG" onclick="genBriefing()">☀️ بریفینگ امروز چیه؟</button>
+    <div class="cbox" id="cbox">
+      <span id="ctext"></span>
+      <br/>
+      <button onclick="copyB(this)">📋 کپی برای Claude</button>
+    </div>
+    <div class="empty" id="hempty">هر روز دکمه بالا رو بزن تا بگم از کجا شروع کنی 🙂</div>
+  </div>
+
+  <div id="tasksView" style="display:none">
+    <div class="frow" id="frow"></div>
+    <div id="tlist"></div>
+    <div id="dsec" style="display:none">
+      <div class="dlbl" id="dlbl"></div>
+      <div id="dlist"></div>
+    </div>
+    <div class="empty" id="tempty" style="display:none">هنوز کاری نداری 🎉</div>
+  </div>
+</div>
+
+<script>
+var KEY = 'karDaram_v2';
+var tasks = [];
+var activeF = 'all';
+
+try { tasks = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(e) {}
+
+function save() { try { localStorage.setItem(KEY, JSON.stringify(tasks)); } catch(e) {} }
+
+function daysUntil(s) {
+  if (!s) return null;
+  var t = new Date(); t.setHours(0,0,0,0);
+  var d = new Date(s); d.setHours(0,0,0,0);
+  return Math.round((d - t) / 86400000);
+}
+
+function toFa(s) {
+  if (!s) return '';
+  return new Date(s).toLocaleDateString('fa-IR', {year:'numeric',month:'long',day:'numeric'});
+}
+
+function dayLabel(d) {
+  if (d === null) return '';
+  if (d === 0) return ' (امروز!)';
+  if (d < 0) return ' (' + Math.abs(d) + ' روز گذشته)';
+  return ' (' + d + ' روز دیگه)';
+}
+
+document.getElementById('hdate').textContent = new Date().toLocaleDateString('fa-IR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+function updBanner() {
+  var u = tasks.filter(function(t) { return !t.done && t.date && daysUntil(t.date) <= 3; });
+  var b = document.getElementById('ubanner');
+  if (u.length) { b.style.display = 'block'; b.textContent = '⚠️ ' + u.length + ' وظیفه فوری داری!'; }
+  else b.style.display = 'none';
+}
+
+function addTask() {
+  var title = document.getElementById('ttitle').value.trim();
+  if (!title) return;
+  tasks.unshift({
+    id: Date.now(),
+    title: title,
+    cat: document.getElementById('tcat').value,
+    date: document.getElementById('tdate').value || null,
+    notes: document.getElementById('tnotes').value.trim() || null,
+    done: false
+  });
+  document.getElementById('ttitle').value = '';
+  document.getElementById('tdate').value = '';
+  document.getElementById('tnotes').value = '';
+  save(); render(); updBanner();
+}
+
+function toggle(id) {
+  var t = tasks.find(function(x) { return x.id === id; });
+  if (t) t.done = !t.done;
+  save(); render(); updBanner();
+}
+
+function del(id) {
+  tasks = tasks.filter(function(x) { return x.id !== id; });
+  save(); render(); updBanner();
+}
+
+function genBriefing() {
+  var p = tasks.filter(function(t) { return !t.done; });
+  var cbox = document.getElementById('cbox');
+  var ct = document.getElementById('ctext');
+  document.getElementById('hempty').style.display = 'none';
+  cbox.style.display = 'block';
+  if (!p.length) { ct.textContent = 'هیچ کاری باقی نمونده!'; return; }
+  var today = new Date().toISOString().split('T')[0];
+  var list = p.map(function(t) {
+    return '- ' + t.title + ' | دسته: ' + t.cat + ' | موعد: ' + (t.date || 'نامشخص') + (t.notes ? ' | یادداشت: ' + t.notes : '');
+  }).join('\n');
+  ct.textContent = 'سلام! امروز ' + today + ' هست. لیست کارهام اینه:\n' + list + '\n\nبهم بگو امروز از کجا شروع کنم و کدوم کارها فوریه. کوتاه و دوستانه بنویس.';
+}
+
+function copyB(btn) {
+  var txt = document.getElementById('ctext').textContent;
+  navigator.clipboard.writeText(txt);
+  btn.textContent = '✅ کپی شد!';
+  setTimeout(function() { btn.textContent = '📋 کپی برای Claude'; }, 2000);
+}
+
+function render() {
+  var allCats = ['all'];
+  tasks.forEach(function(t) { if (allCats.indexOf(t.cat) === -1) allCats.push(t.cat); });
+
+  var fr = document.getElementById('frow');
+  fr.innerHTML = '';
+  allCats.forEach(function(c) {
+    var b = document.createElement('button');
+    b.className = 'fbtn' + (activeF === c ? ' active' : '');
+    b.textContent = c === 'all' ? 'همه' : c;
+    b.onclick = function() { activeF = c; render(); };
+    fr.appendChild(b);
+  });
+
+  var pending = tasks.filter(function(t) { return !t.done && (activeF === 'all' || t.cat === activeF); });
+  var done = tasks.filter(function(t) { return t.done && (activeF === 'all' || t.cat === activeF); });
+
+  document.getElementById('tempty').style.display = (pending.length === 0 && done.length === 0) ? 'block' : 'none';
+
+  var tl = document.getElementById('tlist');
+  tl.innerHTML = '';
+  pending.forEach(function(t) {
+    var d = daysUntil(t.date);
+    var urg = d !== null && d <= 3;
+
+    var card = document.createElement('div');
+    card.className = 'card' + (urg ? ' urg' : '');
+
+    var cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.onchange = (function(id) { return function() { toggle(id); }; })(t.id);
+
+    var info = document.createElement('div');
+    info.className = 'info';
+
+    var ttl = document.createElement('div');
+    ttl.className = 'ttl';
+    ttl.textContent = t.title;
+    info.appendChild(ttl);
+
+    if (t.notes) {
+      var nn = document.createElement('div');
+      nn.className = 'tnotes';
+      nn.textContent = t.notes;
+      info.appendChild(nn);
+    }
+
+    var tags = document.createElement('div');
+    tags.className = 'tags';
+
+    var ct = document.createElement('span');
+    ct.className = 'tcat';
+    ct.textContent = t.cat;
+    tags.appendChild(ct);
+
+    if (t.date) {
+      var dt = document.createElement('span');
+      dt.className = 'tdate' + (urg ? ' urg' : '');
+      dt.textContent = (urg ? '⚠️ ' : '') + toFa(t.date) + dayLabel(d);
+      tags.appendChild(dt);
+    }
+    info.appendChild(tags);
+
+    var db = document.createElement('button');
+    db.className = 'ibtn';
+    db.textContent = '🗑️';
+    db.onclick = (function(id) { return function() { del(id); }; })(t.id);
+
+    var top = document.createElement('div');
+    top.className = 'top';
+    top.appendChild(cb);
+    top.appendChild(info);
+    top.appendChild(db);
+    card.appendChild(top);
+    tl.appendChild(card);
+  });
+
+  var ds = document.getElementById('dsec');
+  var dl = document.getElementById('dlist');
+  if (done.length) {
+    ds.style.display = 'block';
+    document.getElementById('dlbl').textContent = '✅ انجام‌شده‌ها (' + done.length + ')';
+    dl.innerHTML = '';
+    done.forEach(function(t) {
+      var dc = document.createElement('div');
+      dc.className = 'dcard';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox'; cb.checked = true;
+      cb.onchange = (function(id) { return function() { toggle(id); }; })(t.id);
+      var sp = document.createElement('span');
+      sp.className = 'dtitle'; sp.textContent = t.title;
+      var db = document.createElement('button');
+      db.className = 'ibtn'; db.textContent = '🗑️';
+      db.onclick = (function(id) { return function() { del(id); }; })(t.id);
+      dc.appendChild(cb); dc.appendChild(sp); dc.appendChild(db);
+      dl.appendChild(dc);
+    });
+  } else ds.style.display = 'none';
+}
+
+function showView(v) {
+  document.getElementById('homeView').style.display = v === 'home' ? 'block' : 'none';
+  document.getElementById('tasksView').style.display = v === 'tasks' ? 'block' : 'none';
+  document.getElementById('navHome').className = v === 'home' ? 'active' : '';
+  document.getElementById('navTasks').className = v === 'tasks' ? 'active' : '';
+  if (v === 'tasks') render();
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(function() {});
+}
+
+updBanner();
+</script>
+</body>
+</html>
